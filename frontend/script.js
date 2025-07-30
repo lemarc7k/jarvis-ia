@@ -32,7 +32,16 @@ function glowOff() {
 async function startRecording() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
+
+    if (!MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+      alert("Tu navegador no soporta grabación en audio/webm;codecs=opus");
+      return;
+    }
+
+    mediaRecorder = new MediaRecorder(stream, {
+      mimeType: "audio/webm;codecs=opus",
+    });
+
     audioChunks = [];
 
     mediaRecorder.ondataavailable = (e) => {

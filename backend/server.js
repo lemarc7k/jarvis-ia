@@ -22,6 +22,10 @@ app.use(express.json());
 // 🔊 Transcripción de audio y respuesta IA
 app.post("/api/voice", upload.single("audio"), async (req, res) => {
   const tmpPath = req.file.path;
+  console.log("📥 Archivo recibido:", req.file);
+  console.log("🧠 Transcripción obtenida:", transcription);
+  console.log("🤖 Respuesta IA:", aiRes.choices[0].message.content);
+
   try {
     const buffer = fs.readFileSync(tmpPath);
     const { result } = await deepgram.listen.prerecorded.transcribeFile(
