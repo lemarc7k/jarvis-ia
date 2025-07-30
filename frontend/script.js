@@ -1,7 +1,5 @@
-// const API_BASE = "http://localhost:3000"; // ❌ SOLO FUNCIONA EN LOCAL
-const API_BASE = window.location.hostname.includes("localhost")
-  ? "http://localhost:3000"
-  : "https://jarvis-ia.onrender.com";
+// Basamos siempre las llamadas en el origen actual (local o producción)
+const API_BASE = window.location.origin;
 
 const jarvisCore = document.getElementById("jarvisCore");
 const wave = document.getElementById("voice-wave");
@@ -45,16 +43,12 @@ async function startRecording() {
     console.log("🎙️ Micrófono activo. Grabando...");
 
     audioChunks = [];
-
     mediaRecorder.ondataavailable = (e) => {
       if (e.data.size) audioChunks.push(e.data);
     };
 
     mediaRecorder.onstop = async () => {
       const blob = new Blob(audioChunks, { type: "audio/webm" });
-      console.log("📼 Blob generado:", blob);
-      console.log("📼 Tamaño del blob:", blob.size, "bytes");
-
       const fd = new FormData();
       fd.append("audio", blob, "voice.webm");
 
@@ -62,16 +56,13 @@ async function startRecording() {
       glowOn();
 
       try {
-        console.log("📡 Enviando audio a:", `${API_BASE}/api/voice`);
-        console.log("📤 FormData contiene archivo:", fd.get("audio"));
-
-        const res = await fetch(`${API_BASE}/api/voice`, {
+        console.log("📡 Enviando audio a:", "/api/voice");
+        const res = await fetch("/api/voice", {
           method: "POST",
           body: fd,
         });
 
         if (!res.ok) throw new Error("Error en /api/voice");
-
         const data = await res.json();
 
         console.log("✅ Transcripción recibida:", data.transcription);
@@ -118,14 +109,13 @@ async function enviarTextoManual() {
   try {
     console.log("⌨️ Enviando prompt manual:", prompt);
 
-    const res = await fetch(`${API_BASE}/api/ia`, {
+    const res = await fetch("/api/ia", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt }),
     });
 
     if (!res.ok) throw new Error("Error en /api/ia");
-
     const { respuesta } = await res.json();
 
     console.log("🤖 Respuesta IA (manual):", respuesta);
@@ -163,7 +153,6 @@ recordBtn.addEventListener("click", () => {
     return;
   }
 
-  // Iniciar grabación de voz
   console.log("🎙️ Iniciando grabación por clic");
   startRecording();
   recordBtn.disabled = false;
