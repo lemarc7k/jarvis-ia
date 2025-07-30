@@ -177,19 +177,62 @@ button:hover {
 
 /* Cajas de información */
 .info-box {
-  position: absolute;
-  top: 20%;
-  width: 200px;
-  padding: 15px;
-  border: 1px solid #00ffff55;
-  background: rgba(0, 255, 255, 0.05);
+  position: fixed; /* fija al viewport */
+
+  /* ——— Posición ——— */
+  top: auto; /* distancia desde arriba (usa sólo top o bottom) */
+  bottom: 1rem; /* distancia desde abajo ← AJUSTA ESTE VALOR */
+  left: 45rem; /* distancia desde la izquierda ← AJUSTA ESTE VALOR */
+  right: auto; /* distancia desde la derecha (usa sólo left o right) */
+
+  /* ——— Dimensiones ——— */
+  width: 200px; /* ancho total del panel ← AJUSTA ESTE VALOR */
+  height: auto; /* altura total (auto adapta al contenido) */
+  /* height:   180px;    altura fija si la prefieres ← OPCIONAL */
+
+  /* ——— Espaciado interior ——— */
+  padding-top: 0.5rem; /* espacio arriba ← AJUSTA ESTE VALOR */
+  padding-right: 0.75rem; /* espacio derecha ← AJUSTA ESTE VALOR */
+  padding-bottom: 0.5rem; /* espacio abajo ← AJUSTA ESTE VALOR */
+  padding-left: 0.75rem; /* espacio izquierda ← AJUSTA ESTE VALOR */
+  /* padding: 0.5rem;   shorthand si usas mismo padding */
+
+  /* ——— Márgenes externos ——— */
+  margin-top: 0; /* margen arriba (no afecta si fixed) */
+  margin-right: 0; /* margen derecha */
+  margin-bottom: 0; /* margen abajo */
+  margin-left: 0; /* margen izquierda */
+  /* puedes usar margin si necesitas separarlo de otros elementos */
+
+  /* ——— Límites de tamaño ——— */
+  min-width: 100px; /* no se encoja más de este ancho ← OPCIONAL */
+  max-width: 200px; /* no crezca más de este ancho ← OPCIONAL */
+  min-height: 80px; /* no se encoja más de esta altura ← OPCIONAL */
+  max-height: 300px; /* no crezca más de esta altura ← OPCIONAL */
+
+  /* ——— Tipografía interna ——— */
+  font-size: 1rem; /* tamaño base del texto ← AJUSTA ESTE VALOR */
+  line-height: 1.2; /* altura de línea ← OPCIONAL */
+
+  /* ——— Icono del clima ——— */
+  /* Ajusta tamaño con estas reglas */
+  --icon-size: 40px; /* variable CSS, luego úsala más abajo */
+
+  /* ——— Visual ——— */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
   box-shadow: 0 0 10px #00ffff33;
-  color: #00ffff;
-  border-radius: 8px;
-  z-index: 2;
+
+  /* ——— Layout interno ——— */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  z-index: 1000; /* siempre encima */
 }
 .info-box.left {
-  left: 5%;
+  left: 50%;
 }
 .info-box.right {
   right: 5%;
@@ -286,4 +329,278 @@ button:hover {
   border-radius: 50%;
   pointer-events: none;
   user-select: none;
+}
+
+/* 1.INTEGRACION DATE&TIMEHora y tiempo */
+
+.date-time {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  text-align: right;
+  font-family: "Orbitron", sans-serif;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
+.date-time #date,
+.date-time #time {
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* 2. INTEGRACIÓN CLIMA: mueve este bloque para reposicionar tu panel */
+/* PANEL de CLIMA completamente configurable */
+.info-box.weather {
+  position: fixed; /* fija al viewport */
+
+  /* ——— Posición ——— */
+  top: auto; /* distancia desde arriba (usa sólo top o bottom) */
+  bottom: 1rem; /* distancia desde abajo ← AJUSTA ESTE VALOR */
+  left: 1rem; /* distancia desde la izquierda ← AJUSTA ESTE VALOR */
+  right: auto; /* distancia desde la derecha (usa sólo left o right) */
+
+  /* ——— Dimensiones ——— */
+  width: 140px; /* ancho total del panel ← AJUSTA ESTE VALOR */
+  height: auto; /* altura total (auto adapta al contenido) */
+  /* height:   180px;    altura fija si la prefieres ← OPCIONAL */
+
+  /* ——— Espaciado interior ——— */
+  padding-top: 0.5rem; /* espacio arriba ← AJUSTA ESTE VALOR */
+  padding-right: 0.75rem; /* espacio derecha ← AJUSTA ESTE VALOR */
+  padding-bottom: 0.5rem; /* espacio abajo ← AJUSTA ESTE VALOR */
+  padding-left: 0.75rem; /* espacio izquierda ← AJUSTA ESTE VALOR */
+  /* padding: 0.5rem;   shorthand si usas mismo padding */
+
+  /* ——— Márgenes externos ——— */
+  margin-top: 0; /* margen arriba (no afecta si fixed) */
+  margin-right: 0; /* margen derecha */
+  margin-bottom: 0; /* margen abajo */
+  margin-left: 0; /* margen izquierda */
+  /* puedes usar margin si necesitas separarlo de otros elementos */
+
+  /* ——— Límites de tamaño ——— */
+  min-width: 100px; /* no se encoja más de este ancho ← OPCIONAL */
+  max-width: 200px; /* no crezca más de este ancho ← OPCIONAL */
+  min-height: 80px; /* no se encoja más de esta altura ← OPCIONAL */
+  max-height: 300px; /* no crezca más de esta altura ← OPCIONAL */
+
+  /* ——— Tipografía interna ——— */
+  font-size: 1rem; /* tamaño base del texto ← AJUSTA ESTE VALOR */
+  line-height: 1.2; /* altura de línea ← OPCIONAL */
+
+  /* ——— Icono del clima ——— */
+  /* Ajusta tamaño con estas reglas */
+  --icon-size: 40px; /* variable CSS, luego úsala más abajo */
+
+  /* ——— Visual ——— */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px #00ffff33;
+
+  /* ——— Layout interno ——— */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  z-index: 1000; /* siempre encima */
+}
+
+/* Tamaño del icono usando la variable */
+#weatherIcon img {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+/* Temperatura */
+#weatherTemp {
+  font-size: 1.2rem; /* tamaño del número ← AJUSTA ESTE VALOR */
+  font-weight: bold;
+}
+
+/* Descripción */
+#weatherDesc {
+  font-size: 0.9rem; /* tamaño del texto descriptivo ← AJUSTA ESTE VALOR */
+  text-transform: capitalize;
+  text-align: center;
+}
+
+/* ► 3. INTEGRACIONNEWS PANEL: posiciona y ajusta tamaño como quieras */
+.info-box.news {
+  position: fixed; /* fija al viewport */
+
+  /* ——— Posición ——— */
+  top: auto; /* distancia desde arriba (usa sólo top o bottom) */
+  bottom: 1rem; /* distancia desde abajo ← AJUSTA ESTE VALOR */
+  left: 12rem; /* distancia desde la izquierda ← AJUSTA ESTE VALOR */
+  right: auto; /* distancia desde la derecha (usa sólo left o right) */
+
+  /* ——— Dimensiones ——— */
+  width: 200px; /* ancho total del panel ← AJUSTA ESTE VALOR */
+  height: auto; /* altura total (auto adapta al contenido) */
+  /* height:   180px;    altura fija si la prefieres ← OPCIONAL */
+
+  /* ——— Espaciado interior ——— */
+  padding-top: 0.5rem; /* espacio arriba ← AJUSTA ESTE VALOR */
+  padding-right: 0.75rem; /* espacio derecha ← AJUSTA ESTE VALOR */
+  padding-bottom: 0.5rem; /* espacio abajo ← AJUSTA ESTE VALOR */
+  padding-left: 0.75rem; /* espacio izquierda ← AJUSTA ESTE VALOR */
+  /* padding: 0.5rem;   shorthand si usas mismo padding */
+
+  /* ——— Márgenes externos ——— */
+  margin-top: 0; /* margen arriba (no afecta si fixed) */
+  margin-right: 0; /* margen derecha */
+  margin-bottom: 0; /* margen abajo */
+  margin-left: 0; /* margen izquierda */
+  /* puedes usar margin si necesitas separarlo de otros elementos */
+
+  /* ——— Límites de tamaño ——— */
+  min-width: 100px; /* no se encoja más de este ancho ← OPCIONAL */
+  max-width: 200px; /* no crezca más de este ancho ← OPCIONAL */
+  min-height: 80px; /* no se encoja más de esta altura ← OPCIONAL */
+  max-height: 300px; /* no crezca más de esta altura ← OPCIONAL */
+
+  /* ——— Tipografía interna ——— */
+  font-size: 1rem; /* tamaño base del texto ← AJUSTA ESTE VALOR */
+  line-height: 1.2; /* altura de línea ← OPCIONAL */
+
+  /* ——— Icono del clima ——— */
+  /* Ajusta tamaño con estas reglas */
+  --icon-size: 40px; /* variable CSS, luego úsala más abajo */
+
+  /* ——— Visual ——— */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px #00ffff33;
+
+  /* ——— Layout interno ——— */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  z-index: 1000; /* siempre encima */
+}
+
+.info-box.news h3 {
+  margin-bottom: 0.5rem;
+}
+.info-box.news ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.info-box.news li {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+.info-box.news a {
+  color: #00ffff;
+  text-decoration: none;
+}
+.info-box.news a:hover {
+  text-decoration: underline;
+}
+
+/* === Responsive Design === */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 900px) {
+  /* Título ligeramente más pequeño */
+  h1.glow-text {
+    font-size: 2.5rem;
+  }
+
+  /* Logo/Jarvis más pequeño y más arriba */
+  .jarvis-core {
+    width: 140px;
+    height: 140px;
+    top: 60px;
+  }
+
+  /* Menos espacio arriba del contenido */
+  .content {
+    padding-top: 200px;
+  }
+
+  /* Paneles pasan a gap más reducido */
+  .horizontal-group {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  /* Input manual ocupa menos ancho */
+  .manual-input input {
+    width: 50%;
+  }
+
+  /* Panel-items más estrechos */
+  .panel-item {
+    min-width: 200px;
+  }
+
+  /* Info‑boxes pasan a flujo normal (stack) */
+  .info-box.left,
+  .info-box.right,
+  .info-box.weather {
+    position: static;
+    width: 80%;
+    margin: 1rem auto;
+  }
+
+  /* Reloj un poco más chico */
+  .date-time {
+    font-size: 1rem;
+  }
+}
+
+/* Móviles y pantallas pequeñas */
+@media (max-width: 600px) {
+  /* Título aún más pequeño */
+  h1.glow-text {
+    font-size: 2rem;
+  }
+
+  /* Logo/Jarvis muy compacto */
+  .jarvis-core {
+    width: 100px;
+    height: 100px;
+    top: 40px;
+  }
+
+  /* Botones e input ajustados */
+  button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+  .manual-input input {
+    width: 70%;
+  }
+
+  /* Paneles en columna */
+  .horizontal-group {
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+  }
+  .panel-item {
+    min-width: 100%;
+  }
+
+  /* Todas las info‑boxes en bloque, ancho total */
+  .info-box {
+    position: static;
+    width: 90%;
+    margin: 0.5rem auto;
+  }
+
+  /* Reloj arriba a la derecha y más pequeño */
+  .date-time {
+    top: 1rem;
+    bottom: auto;
+    right: 1rem;
+    font-size: 0.8rem;
+  }
 }
