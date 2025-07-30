@@ -22,12 +22,12 @@ app.use(express.json());
 // 🔊 Transcripción de audio y respuesta IA
 app.post("/api/voice", upload.single("audio"), async (req, res) => {
   const tmpPath = req.file.path;
-  console.log("📥 Archivo recibido:", req.file);
-  console.log("🧠 Transcripción obtenida:", transcription);
-  console.log("🤖 Respuesta IA:", aiRes.choices[0].message.content);
 
   try {
+    console.log("📥 Archivo recibido:", req.file);
+
     const buffer = fs.readFileSync(tmpPath);
+
     const { result } = await deepgram.listen.prerecorded.transcribeFile(
       buffer,
       {
@@ -41,6 +41,8 @@ app.post("/api/voice", upload.single("audio"), async (req, res) => {
     const transcription =
       result?.channels?.[0]?.alternatives?.[0]?.transcript || "No se entendió";
 
+    console.log("🧠 Transcripción obtenida:", transcription);
+
     const aiRes = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
@@ -53,9 +55,12 @@ app.post("/api/voice", upload.single("audio"), async (req, res) => {
       ],
     });
 
+    const respuesta = aiRes.choices[0].message.content;
+    console.log("🤖 Respuesta IA:", respuesta);
+
     res.json({
       transcription,
-      response: aiRes.choices[0].message.content,
+      response: respuesta,
     });
   } catch (err) {
     console.error("❌ ERROR EN /api/voice:", err);
@@ -83,7 +88,11 @@ app.post("/api/ia", async (req, res) => {
       ],
     });
 
-    res.json({ respuesta: aiRes.choices[0].message.content });
+    const respuesta = aiRes.choices[0].message.content;
+    console.log("🧠 Texto manual recibido:", prompt);
+    console.log("🤖 Respuesta IA:", respuesta);
+
+    res.json({ respuesta });
   } catch (err) {
     console.error("❌ ERROR EN /api/ia:", err);
     res.status(500).json({ error: "Error procesando el texto" });
@@ -98,7 +107,7 @@ app.get("*", (req, res) => {
     : res.status(404).send("index.html no encontrado");
 });
 
-// 🌐 JARVIS ONLINE COMPATIBLE EN TODAS LAS LINEAS, TANTO LOCAL COMO EN ONLINE CON RENDER, VERCEL ETC
+// ✅ Escuchar en todos los entornos (local y Render)
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Jarvis Online escuchando en http://0.0.0.0:${PORT}`);
 });

@@ -42,13 +42,19 @@ async function startRecording() {
       mimeType: "audio/webm;codecs=opus",
     });
 
+    console.log("🎙️ Micrófono activo. Grabando...");
+
     audioChunks = [];
 
     mediaRecorder.ondataavailable = (e) => {
       if (e.data.size) audioChunks.push(e.data);
     };
+
     mediaRecorder.onstop = async () => {
       const blob = new Blob(audioChunks, { type: "audio/webm" });
+      console.log("📼 Blob generado:", blob);
+      console.log("📼 Tamaño del blob:", blob.size, "bytes");
+
       const fd = new FormData();
       fd.append("audio", blob, "voice.webm");
 
@@ -56,20 +62,32 @@ async function startRecording() {
       glowOn();
 
       try {
+        console.log("📡 Enviando audio a:", `${API_BASE}/api/voice`);
+        console.log("📤 FormData contiene archivo:", fd.get("audio"));
+
         const res = await fetch(`${API_BASE}/api/voice`, {
           method: "POST",
           body: fd,
         });
+
         if (!res.ok) throw new Error("Error en /api/voice");
 
         const data = await res.json();
+
+        console.log("✅ Transcripción recibida:", data.transcription);
+        console.log("✅ Respuesta IA:", data.response);
+
         transcriptionBox.textContent = data.transcription;
         responseBox.textContent = data.response;
         await reproducirVoz(data.response);
       } catch (err) {
-        console.error(err);
+        console.error(
+          "❌ Error durante el envío de audio o respuesta IA:",
+          err
+        );
         responseBox.textContent = "❌ Error procesando la voz.";
       }
+
       status.textContent = "✅ Pulsa para hablar de nuevo";
     };
 
@@ -78,10 +96,13 @@ async function startRecording() {
 
     // Automático tras 5s
     setTimeout(() => {
-      if (mediaRecorder.state === "recording") mediaRecorder.stop();
+      if (mediaRecorder.state === "recording") {
+        console.log("⏱️ Tiempo límite alcanzado. Deteniendo grabación.");
+        mediaRecorder.stop();
+      }
     }, 5000);
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error accediendo al micrófono:", err);
     status.textContent = "❌ Error accediendo al micrófono.";
   }
 }
@@ -95,19 +116,25 @@ async function enviarTextoManual() {
   status.textContent = "Consultando...";
 
   try {
+    console.log("⌨️ Enviando prompt manual:", prompt);
+
     const res = await fetch(`${API_BASE}/api/ia`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt }),
     });
+
     if (!res.ok) throw new Error("Error en /api/ia");
 
     const { respuesta } = await res.json();
+
+    console.log("🤖 Respuesta IA (manual):", respuesta);
+
     responseBox.textContent = respuesta;
     transcriptionBox.textContent = prompt;
     await reproducirVoz(respuesta);
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error en texto manual:", err);
     responseBox.textContent = "❌ Error procesando el texto.";
   }
 }
@@ -122,12 +149,14 @@ function reproducirVoz(texto) {
   u.pitch = 0.8;
   glowOn();
   u.onend = glowOff;
+  console.log("🔊 Reproduciendo respuesta por voz...");
   synth.speak(u);
 }
 
 // EVENTOS
 recordBtn.addEventListener("click", () => {
   if (mediaRecorder?.state === "recording") {
+    console.log("⏹️ Deteniendo grabación por clic");
     mediaRecorder.stop();
     recordBtn.disabled = true;
     status.textContent = "⏹️ Procesando...";
