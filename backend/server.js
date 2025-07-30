@@ -94,7 +94,7 @@ app.get("*", (req, res) => {
     : res.status(404).send("index.html no encontrado");
 });
 
-// 🚀 Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`✅ Jarvis Online escuchando en http://localhost:${PORT}`);
+// 🌐 JARVIS ONLINE COMPATIBLE EN TODAS LAS LINEAS, TANTO LOCAL COMO EN ONLINE CON RENDER, VERCEL ETC
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Jarvis Online escuchando en http://0.0.0.0:${PORT}`);
 });

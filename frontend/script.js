@@ -1,5 +1,7 @@
 // const API_BASE = "http://localhost:3000"; // ❌ SOLO FUNCIONA EN LOCAL
-const API_BASE = window.location.origin; // ✅ FUNCIONA EN LOCAL Y PRODUCCIÓN
+const API_BASE = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://jarvis-ia.onrender.com";
 
 const jarvisCore = document.getElementById("jarvisCore");
 const wave = document.getElementById("voice-wave");
