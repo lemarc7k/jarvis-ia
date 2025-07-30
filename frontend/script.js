@@ -162,9 +162,12 @@ recordBtn.addEventListener("click", () => {
     status.textContent = "⏹️ Procesando...";
     return;
   }
-  new Audio("/assets/bootup.wav").play();
+
+  // Iniciar grabación de voz
+  console.log("🎙️ Iniciando grabación por clic");
   startRecording();
   recordBtn.disabled = false;
+  status.textContent = "🎙️ Grabando...";
 });
 
 sendBtn.addEventListener("click", enviarTextoManual);
