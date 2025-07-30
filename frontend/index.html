@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MEVE Industries - Panel Central</title>
+
+    <!-- Google Font: Orbitron -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Free (solid icons) - Sin integrity para evitar bloqueos -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="grid-bg"></div>
+
+    <!-- Círculo central con logo y ondas -->
+    <div class="jarvis-core" id="jarvisCore">
+      <img src="assets/logo3.jpeg" alt="Logo Jarvis" class="jarvis-logo" />
+      <div class="wave-inside" id="voice-wave" style="display: none">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+
+    <!-- Info Boxes -->
+    <div class="info-box left">
+      <h3>Sistema Vital</h3>
+      <p>CPU: 32%</p>
+      <p>Estado: Estable</p>
+    </div>
+    <div class="info-box right">
+      <h3>Conexión</h3>
+      <p>Ping: 83ms</p>
+      <p>Red: OK</p>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="content">
+      <h1 class="glow-text" style="font-family: 'Orbitron', sans-serif">
+        MEVE INDUSTRIES
+      </h1>
+
+      <!-- Botón de grabación -->
+      <button
+        id="recordBtn"
+        aria-label="Grabar consulta"
+        title="Grabar consulta"
+      >
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+      <p id="status">En espera de su consulta...</p>
+
+      <div class="panel horizontal-group">
+        <!-- Entrada manual (brain) -->
+        <div class="panel-item">
+          <h2><i class="fa-solid fa-brain"></i></h2>
+          <div class="manual-input">
+            <input
+              id="manualText"
+              type="text"
+              placeholder="Escriba su consulta aquí, señor..."
+            />
+            <button id="sendBtn">Enviar</button>
+          </div>
+        </div>
+
+        <!-- Transcripción (comment-dots) -->
+        <div class="panel-item">
+          <h2><i class="fa-solid fa-comment-dots"></i></h2>
+          <div id="transcription">---</div>
+        </div>
+
+        <!-- Respuesta IA (comments) -->
+        <div class="panel-item">
+          <h2><i class="fa-solid fa-comments"></i></h2>
+          <div id="response">---</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
+</html>
