@@ -17,6 +17,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 // Servir archivos estáticos (frontend)
 const frontendPath = path.join(__dirname, "../frontend");
 app.use(express.static(frontendPath));
+app.use("/assets", express.static(path.join(frontendPath, "assets")));
 app.use(express.json());
 
 // 🔊 Transcripción de audio y respuesta IA

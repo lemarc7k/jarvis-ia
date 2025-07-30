@@ -162,7 +162,7 @@ recordBtn.addEventListener("click", () => {
     status.textContent = "⏹️ Procesando...";
     return;
   }
-  new Audio("assets/bootup.wav").play();
+  new Audio("/assets/bootup.wav").play();
   startRecording();
   recordBtn.disabled = false;
 });
