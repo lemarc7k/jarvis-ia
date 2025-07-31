@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CEO-as-a-Service</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ✅ Fuente legible y moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <script
+    src="https://kit.fontawesome.com/a2e0b2c6c1.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
+
+  <body>
+    <!-- Fondo cuadriculado -->
+    <div class="grid-bg"></div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+      <h1 class="glow-text">CEO AGENT</h1>
+
+      <div class="horizontal-group">
+        <!-- Input de la idea -->
+        <div class="panel-item">
+          <h2>Describe tu idea</h2>
+          <div class="manual-input">
+            <input
+              type="text"
+              id="ceoInput"
+              placeholder="Escribe tu idea o problema..."
+            />
+            <select id="modoSelector">
+              <option value="plan">Plan Ejecutivo</option>
+              <option value="pitch_deck">Pitch Deck</option>
+            </select>
+            <button id="ceoSendBtn">Generar</button>
+          </div>
+        </div>
+
+        <!-- Resultado -->
+<div class="panel-item">
+  <h2>Resultado</h2>
+  <div id="ceoResponse" class="response-container">
+    <!-- Aquí se insertarán las cards generadas dinámicamente -->
+  </div>
+</div>
+
+
+
+    <!-- Botón volver -->
+    <div style="text-align: center; margin-top: 30px">
+      <a href="index.html">
+        <button><i class="fa-solid fa-arrow-left"></i> Volver a Jarvis</button>
+      </a>
+    </div>
+
+    <!-- Script principal -->
+    <script src="script.js"></script>
+    <script>
+      // Inicializa eventos al cargar la página
+      window.addEventListener("DOMContentLoaded", initCeoEvents);
+    </script>
+  </body>
+</html>

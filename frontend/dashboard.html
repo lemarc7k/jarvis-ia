@@ -1,0 +1,36 @@
+<!-- Título MEVE INDUSTRIES justo debajo del logo -->
+<h1 class="glow-text meve-title">MEVE INDUSTRIES</h1>
+
+<div id="welcomeContainer">
+  <div id="welcomeMessage"></div>
+</div>
+
+<script>
+  const message =
+    "Bienvenido al panel principal de MEVE Industries... Iniciando sistemas y protocolos...\nSistemas activos. Clima y entorno sincronizados.\nHoy es un día excelente para innovar, Señor Mera.";
+
+  const target = document.getElementById("welcomeMessage");
+  let index = 0;
+
+  function escribirLetraPorLetra() {
+    if (index < message.length) {
+      const char = message.charAt(index);
+
+      // Si encuentra un salto de línea, lo reemplaza por <br>
+      if (char === "\n") {
+        target.innerHTML += "<br>";
+      } else {
+        target.innerHTML += char;
+      }
+
+      index++;
+
+      // Pausa ligeramente mayor después de puntos
+      const delay = char === "." ? 200 : 40;
+
+      setTimeout(escribirLetraPorLetra, delay);
+    }
+  }
+
+  escribirLetraPorLetra();
+</script>

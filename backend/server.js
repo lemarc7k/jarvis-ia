@@ -100,7 +100,63 @@ app.post("/api/ia", async (req, res) => {
   }
 });
 
-// 🌐 Fallback para Single Page App
+// CEO AS A SERVIRCE: CEO-as-a-Service
+app.post("/api/ceo", async (req, res) => {
+  try {
+    const { idea, modo } = req.body;
+    if (!idea) return res.status(400).json({ error: "Falta la idea inicial" });
+
+    // Prompt diferente si es pitch_deck
+    const prompt =
+      modo === "pitch_deck"
+        ? `
+Actúa como un experto en startups y presentaciones para inversores. 
+Genera un pitch deck en formato de secciones numeradas. Cada sección representa una diapositiva con un título y contenido claro.
+Usa este formato (no añadas notas ni explicaciones externas):
+
+Slide 1: Título de la idea + frase impactante
+Slide 2: Problema que resuelve
+Slide 3: Solución propuesta
+Slide 4: Cómo funciona
+Slide 5: Mercado objetivo
+Slide 6: Modelo de negocio
+Slide 7: Diferenciador clave
+Slide 8: Llamado a la acción / visión a futuro
+
+Idea: ${idea}
+      `
+        : `
+Actúa como CEO virtual experto en startups y emprendimiento. 
+Genera un plan ejecutivo corto con estos puntos claros a partir de la idea proporcionada por el usuario:
+
+1. Resumen de la idea.
+2. Nombre sugerido del proyecto (3 opciones creativas).
+3. Pasos inmediatos (lista breve de 5 tareas clave iniciales).
+4. Descripción breve del MVP recomendado.
+5. Branding sugerido (nombre, slogan corto).
+
+Idea del usuario: ${idea}
+      `;
+
+    const ceoResponse = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "system", content: prompt }],
+    });
+
+    const respuesta = ceoResponse.choices[0].message.content;
+    res.json({ respuesta });
+  } catch (err) {
+    console.error("❌ ERROR EN /api/ceo:", err);
+    res.status(500).json({ error: "Error generando plan ejecutivo" });
+  }
+});
+
+// RUTA DEL SERVIDOR, MANTENER SIEMPRE AL FINAL DEL CODIGO: ✅ Escuchar en todos los entornos (local y Render)
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Jarvis Online escuchando en http://0.0.0.0:${PORT}`);
+});
+
+// RUTA DEL SERVIDOR, MANTENER SIEMPRE AL FINAL DEL CODIGO:🌐 Fallback para Single Page App
 app.get("*", (req, res) => {
   const indexPath = path.join(frontendPath, "index.html");
   fs.existsSync(indexPath)
@@ -108,7 +164,41 @@ app.get("*", (req, res) => {
     : res.status(404).send("index.html no encontrado");
 });
 
-// ✅ Escuchar en todos los entornos (local y Render)
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅ Jarvis Online escuchando en http://0.0.0.0:${PORT}`);
+/// CEO-as-a-Service: Generador inteligente de planes ejecutivos o pitch decks
+app.post("/api/ceo", async (req, res) => {
+  try {
+    const { idea, modo } = req.body;
+    if (!idea) return res.status(400).json({ error: "Falta la idea inicial" });
+
+    const prompt =
+      modo === "pitch_deck"
+        ? `...` // (mantén aquí el texto actual)
+        : `...`; // (igual aquí)
+
+    const ceoResponse = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content:
+            "Responde como un CEO fundador con visión, claridad ejecutiva y mentalidad de startup disruptiva.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      temperature: 0.85,
+      max_tokens: 1800,
+    });
+
+    const respuesta =
+      ceoResponse.choices?.[0]?.message?.content ||
+      "❌ No se pudo generar el plan.";
+
+    res.json({ respuesta });
+  } catch (err) {
+    console.error("❌ ERROR EN /api/ceo:", err);
+    res.status(500).json({ error: "Error generando plan ejecutivo" });
+  }
 });

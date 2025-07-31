@@ -1,606 +1,439 @@
-/* style.css */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* === FUENTE Y BASE === */
 body {
-  background: radial-gradient(ellipse at center, #001a1a 0%, #000000 100%);
-  color: #00ffff;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  background-color: #010a0f;
+  color: #00f7ff;
   overflow-x: hidden;
-  overflow-y: auto;
-  position: relative;
-  text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-  cursor: url("/assets/cursor-laser.cur"), auto; /* Ruta absoluta */
-}
+  min-height: 100vh;
 
-/* Fondo de cuadricula */
-.grid-bg {
-  position: absolute;
-  inset: 0;
+  /* Cuadriculado animado */
   background-image: linear-gradient(
-      rgba(0, 255, 255, 0.03) 1px,
+      rgba(0, 255, 255, 0.05) 1px,
       transparent 1px
     ),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
-  animation: moveGrid 60s linear infinite;
-  z-index: 0;
+  background-attachment: fixed;
+  animation: gridFlow 60s linear infinite;
 }
 
-@keyframes moveGrid {
+#welcomeContainer {
+  margin-top: 20px; /* aquí puedes subir o bajar el bloque completo */
+  text-align: center;
+}
+
+#welcomeMessage {
+  text-align: center; /* Centra horizontalmente */
+  margin: 80px auto; /* Reduce el espacio superior */
+  max-width: 1000px;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  display: block;
+  white-space: pre-line; /* Asegura que los \n funcionen */
+}
+
+.dashboard-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* puedes ajustar esto */
+  text-align: center;
+}
+
+@keyframes gridFlow {
   from {
     background-position: 0 0;
   }
   to {
-    background-position: 1000px 1000px;
+    background-position: 1000px 1000px; /* movimiento diagonal */
   }
 }
 
-/* Contenedor del logo y ondas */
-.jarvis-core {
-  position: absolute;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 170px; /* Igual al .jarvis-logo */
-  height: 170px;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  overflow: hidden;
-  transition: box-shadow 0.3s ease-in-out;
-  animation: rotate 12s linear infinite, float 4s ease-in-out infinite;
+h1,
+h2,
+h3,
+p {
+  margin: 0;
 }
 
-@keyframes rotate {
-  to {
-    transform: translateX(-50%) rotate(360deg);
-  }
+a {
+  color: #00f7ff;
+  text-decoration: none;
 }
 
+input,
+button {
+  font-family: "Orbitron", sans-serif;
+}
+
+/* === FONDO DE REJILLA === */
+.grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(
+    circle,
+    rgba(0, 247, 255, 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 40px 40px;
+  z-index: -2;
+}
+
+/* === CEO AGENTTITULO === */
+.glow-text {
+  text-align: center;
+  font-size: 3em; /* puedes ajustar a 2.5em si lo ves muy grande */
+  color: #00f7ff;
+  text-shadow: 0 0 8px #00f7ff, 0 0 25px #00f7ff;
+  margin-top: 0px; /* 🔼 SÚBELO: baja este número para acercarlo arriba */
+  margin-bottom: 70px;
+}
+
+/* === ANIMACIONES === */
 @keyframes float {
   0%,
   100% {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
   50% {
-    transform: translate(-50%, -12px);
+    transform: translateY(-10px);
   }
 }
 
-/* Glow al hablar */
-.jarvis-core.glow {
-  animation: pulseGlow 1.5s ease-in-out infinite;
+/* === MEVE INDUSTRIES === */
+.meve-title {
+  font-size: 3.2em;
+  color: #00f7ff;
+  text-align: top;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #00f7ff, 0 0 30px #00f7ff;
+  margin-top: 0px;
+  animation: pulseGlow 3s ease-in-out infinite;
 }
 
+/* Efecto animado más elegante que el de CEO */
 @keyframes pulseGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 15px #00ffffaa;
+  0% {
+    text-shadow: 0 0 10px #00f7ff, 0 0 30px #00f7ff;
   }
   50% {
-    box-shadow: 0 0 35px #00ffffcc;
+    text-shadow: 0 0 20px #00f7ff, 0 0 60px #00ffff;
+  }
+  100% {
+    text-shadow: 0 0 10px #00f7ff, 0 0 30px #00f7ff;
   }
 }
 
-/* Onda interior */
+/* === LOGO CENTRAL === */
+.jarvis-core {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
+  animation: float 4s ease-in-out infinite;
+}
+.jarvis-logo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #00f7ff;
+}
 .wave-inside {
-  display: none;
-  position: absolute;
-  bottom: 10px;
   display: flex;
   gap: 4px;
+  position: absolute;
 }
-
-.wave-inside .bar {
-  width: 4px;
-  height: 15px;
-  background: #00ffff;
-  animation: pulseWave 1s infinite ease-in-out;
-  border-radius: 2px;
-  box-shadow: 0 0 6px #00ffff66;
+.bar {
+  width: 5px;
+  height: 20px;
+  background-color: #00f7ff;
+  animation: wave 1s infinite ease-in-out;
 }
-
-.wave-inside .bar:nth-child(2) {
+.bar:nth-child(2) {
   animation-delay: 0.1s;
 }
-.wave-inside .bar:nth-child(3) {
+.bar:nth-child(3) {
   animation-delay: 0.2s;
 }
-.wave-inside .bar:nth-child(4) {
+.bar:nth-child(4) {
   animation-delay: 0.3s;
 }
-.wave-inside .bar:nth-child(5) {
+.bar:nth-child(5) {
   animation-delay: 0.4s;
 }
 
-@keyframes pulseWave {
+@keyframes wave {
   0%,
   100% {
-    transform: scaleY(0.4);
+    height: 10px;
   }
   50% {
-    transform: scaleY(1.6);
+    height: 30px;
   }
 }
 
-/* Título principal */
-h1.glow-text {
-  font-family: "Orbitron", sans-serif;
-  font-weight: 700;
-  font-size: 3rem;
-  letter-spacing: 2px;
-  color: #00ffff;
-  text-shadow: 0 0 10px #00ffff, 0 0 30px #00ffff;
-  margin-bottom: 20px;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-  }
-  to {
-    text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
-  }
-}
-
-/* Botones e iconos */
-button {
-  background-color: #002f4b;
-  color: #00ffff;
-  border: 1px solid #00ffff;
-  padding: 12px 24px;
-  font-size: 1.2rem;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 0 10px #00ffff88;
-  transition: 0.3s;
-}
-button:hover {
-  background-color: #003b60;
-  box-shadow: 0 0 20px #00ffffaa;
-}
-
-/* Forzar iconos Font‑Awesome a tu color y tamaño */
-.fa-solid,
-.fa-regular {
-  color: #00ffff;
-  font-size: 1.4rem;
-}
-
-/* Cajas de información */
+/* === PANEL DE INFORMACIÓN === */
 .info-box {
-  position: fixed; /* fija al viewport */
-
-  /* ——— Posición ——— */
-  top: auto; /* distancia desde arriba (usa sólo top o bottom) */
-  bottom: 1rem; /* distancia desde abajo ← AJUSTA ESTE VALOR */
-  left: 45rem; /* distancia desde la izquierda ← AJUSTA ESTE VALOR */
-  right: auto; /* distancia desde la derecha (usa sólo left o right) */
-
-  /* ——— Dimensiones ——— */
-  width: 200px; /* ancho total del panel ← AJUSTA ESTE VALOR */
-  height: auto; /* altura total (auto adapta al contenido) */
-  /* height:   180px;    altura fija si la prefieres ← OPCIONAL */
-
-  /* ——— Espaciado interior ——— */
-  padding-top: 0.5rem; /* espacio arriba ← AJUSTA ESTE VALOR */
-  padding-right: 0.75rem; /* espacio derecha ← AJUSTA ESTE VALOR */
-  padding-bottom: 0.5rem; /* espacio abajo ← AJUSTA ESTE VALOR */
-  padding-left: 0.75rem; /* espacio izquierda ← AJUSTA ESTE VALOR */
-  /* padding: 0.5rem;   shorthand si usas mismo padding */
-
-  /* ——— Márgenes externos ——— */
-  margin-top: 0; /* margen arriba (no afecta si fixed) */
-  margin-right: 0; /* margen derecha */
-  margin-bottom: 0; /* margen abajo */
-  margin-left: 0; /* margen izquierda */
-  /* puedes usar margin si necesitas separarlo de otros elementos */
-
-  /* ——— Límites de tamaño ——— */
-  min-width: 100px; /* no se encoja más de este ancho ← OPCIONAL */
-  max-width: 200px; /* no crezca más de este ancho ← OPCIONAL */
-  min-height: 80px; /* no se encoja más de esta altura ← OPCIONAL */
-  max-height: 300px; /* no crezca más de esta altura ← OPCIONAL */
-
-  /* ——— Tipografía interna ——— */
-  font-size: 1rem; /* tamaño base del texto ← AJUSTA ESTE VALOR */
-  line-height: 1.2; /* altura de línea ← OPCIONAL */
-
-  /* ——— Icono del clima ——— */
-  /* Ajusta tamaño con estas reglas */
-  --icon-size: 40px; /* variable CSS, luego úsala más abajo */
-
-  /* ——— Visual ——— */
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px #00ffff33;
-
-  /* ——— Layout interno ——— */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-
-  z-index: 1000; /* siempre encima */
+  position: fixed;
+  width: 140px;
+  background: rgba(0, 247, 255, 0.1);
+  border: 1px solid #00f7ff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.75em;
+  box-shadow: 0 0 10px #00f7ff66;
+  backdrop-filter: blur(5px);
 }
 .info-box.left {
-  left: 50%;
+  bottom: 20px;
+  left: 20px;
 }
 .info-box.right {
-  right: 5%;
+  bottom: 20px;
+  right: 20px;
 }
-
-/* Contenido principal */
-.content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding-top: 260px;
+.info-box.weather {
+  bottom: 110px;
+  left: 20px;
 }
-
-/* Paneles */
-.horizontal-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  max-width: 90%;
-  margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #00ffff33;
-  background: rgba(0, 255, 255, 0.05);
-  border-radius: 10px;
-  box-shadow: 0 0 15px #00ffff22;
-  text-align: center;
-  flex-wrap: wrap;
+.info-box.news {
+  bottom: 110px;
+  right: 20px;
 }
-
-.panel-item {
-  flex: 1;
-  min-width: 280px;
-  padding: 15px;
-  border: 1px solid #00ffff22;
-  background: rgba(0, 255, 255, 0.04);
-  border-radius: 8px;
-  box-shadow: inset 0 0 10px #00ffff11;
-}
-
-.panel-item h2 {
-  font-size: 1.4rem;
-  margin-bottom: 15px;
-  color: #00ffff;
-}
-
-/* Transcripción y respuesta */
-#transcription,
-#response {
-  font-size: 1rem;
-  color: #00ffff;
-  padding: 10px;
-  background: rgba(0, 255, 255, 0.06);
-  border-radius: 6px;
-  box-shadow: inset 0 0 8px #00ffff22;
-}
-
-/* Input manual */
-.manual-input {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.manual-input input {
-  width: 60%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #00ffff55;
-  background-color: rgba(0, 255, 255, 0.05);
-  color: #00ffff;
-  font-size: 1rem;
-  outline: none;
-  box-shadow: 0 0 8px #00ffff44;
-}
-.manual-input button {
-  padding: 10px 20px;
-  border: 1px solid #00ffff88;
-  background-color: #001f1f;
-  color: #00ffff;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: 0.3s;
-}
-.manual-input button:hover {
-  background-color: #003b60;
-  box-shadow: 0 0 15px #00ffffaa;
-}
-
-/* Logo dentro de jarvis-core */
-.jarvis-logo {
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* 1.INTEGRACION DATE&TIMEHora y tiempo */
 
 .date-time {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 1000;
-  text-align: right;
-  font-family: "Orbitron", sans-serif;
-  color: #0ff;
-  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9em;
+  text-align: center;
+  color: #00f7ff;
+  z-index: 999;
 }
 
-.date-time #date,
-.date-time #time {
-  margin: 0;
-  line-height: 1.2;
-}
-
-/* 2. INTEGRACIÓN CLIMA: mueve este bloque para reposicionar tu panel */
-/* PANEL de CLIMA completamente configurable */
-.info-box.weather {
-  position: fixed; /* fija al viewport */
-
-  /* ——— Posición ——— */
-  top: auto; /* distancia desde arriba (usa sólo top o bottom) */
-  bottom: 1rem; /* distancia desde abajo ← AJUSTA ESTE VALOR */
-  left: 1rem; /* distancia desde la izquierda ← AJUSTA ESTE VALOR */
-  right: auto; /* distancia desde la derecha (usa sólo left o right) */
-
-  /* ——— Dimensiones ——— */
-  width: 140px; /* ancho total del panel ← AJUSTA ESTE VALOR */
-  height: auto; /* altura total (auto adapta al contenido) */
-  /* height:   180px;    altura fija si la prefieres ← OPCIONAL */
-
-  /* ——— Espaciado interior ——— */
-  padding-top: 0.5rem; /* espacio arriba ← AJUSTA ESTE VALOR */
-  padding-right: 0.75rem; /* espacio derecha ← AJUSTA ESTE VALOR */
-  padding-bottom: 0.5rem; /* espacio abajo ← AJUSTA ESTE VALOR */
-  padding-left: 0.75rem; /* espacio izquierda ← AJUSTA ESTE VALOR */
-  /* padding: 0.5rem;   shorthand si usas mismo padding */
-
-  /* ——— Márgenes externos ——— */
-  margin-top: 0; /* margen arriba (no afecta si fixed) */
-  margin-right: 0; /* margen derecha */
-  margin-bottom: 0; /* margen abajo */
-  margin-left: 0; /* margen izquierda */
-  /* puedes usar margin si necesitas separarlo de otros elementos */
-
-  /* ——— Límites de tamaño ——— */
-  min-width: 100px; /* no se encoja más de este ancho ← OPCIONAL */
-  max-width: 200px; /* no crezca más de este ancho ← OPCIONAL */
-  min-height: 80px; /* no se encoja más de esta altura ← OPCIONAL */
-  max-height: 300px; /* no crezca más de esta altura ← OPCIONAL */
-
-  /* ——— Tipografía interna ——— */
-  font-size: 1rem; /* tamaño base del texto ← AJUSTA ESTE VALOR */
-  line-height: 1.2; /* altura de línea ← OPCIONAL */
-
-  /* ——— Icono del clima ——— */
-  /* Ajusta tamaño con estas reglas */
-  --icon-size: 40px; /* variable CSS, luego úsala más abajo */
-
-  /* ——— Visual ——— */
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px #00ffff33;
-
-  /* ——— Layout interno ——— */
+/* === TABS === */
+.tabs {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-
-  z-index: 1000; /* siempre encima */
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+.tab-btn {
+  background: transparent;
+  border: 2px solid #00f7ff;
+  color: #00f7ff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.tab-btn:hover,
+.tab-btn.active {
+  background: #00f7ff33;
 }
 
-/* Tamaño del icono usando la variable */
-#weatherIcon img {
-  width: var(--icon-size);
-  height: var(--icon-size);
+/* === SECCIONES Y PANELES === */
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-/* Temperatura */
-#weatherTemp {
-  font-size: 1.2rem; /* tamaño del número ← AJUSTA ESTE VALOR */
-  font-weight: bold;
+.panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
 }
-
-/* Descripción */
-#weatherDesc {
-  font-size: 0.9rem; /* tamaño del texto descriptivo ← AJUSTA ESTE VALOR */
-  text-transform: capitalize;
+.panel-item {
+  flex: 1 1 300px;
+  min-height: 150px;
+  padding: 20px;
+  background: rgba(0, 247, 255, 0.05);
+  border: 1px solid #00f7ff44;
+  border-radius: 10px;
+  box-shadow: 0 0 12px #00f7ff22;
   text-align: center;
 }
 
-/* ► 3. INTEGRACIONNEWS PANEL: posiciona y ajusta tamaño como quieras */
-.info-box.news {
-  position: fixed; /* fija al viewport */
-
-  /* ——— Posición ——— */
-  top: auto; /* distancia desde arriba (usa sólo top o bottom) */
-  bottom: 1rem; /* distancia desde abajo ← AJUSTA ESTE VALOR */
-  left: 12rem; /* distancia desde la izquierda ← AJUSTA ESTE VALOR */
-  right: auto; /* distancia desde la derecha (usa sólo left o right) */
-
-  /* ——— Dimensiones ——— */
-  width: 200px; /* ancho total del panel ← AJUSTA ESTE VALOR */
-  height: auto; /* altura total (auto adapta al contenido) */
-  /* height:   180px;    altura fija si la prefieres ← OPCIONAL */
-
-  /* ——— Espaciado interior ——— */
-  padding-top: 0.5rem; /* espacio arriba ← AJUSTA ESTE VALOR */
-  padding-right: 0.75rem; /* espacio derecha ← AJUSTA ESTE VALOR */
-  padding-bottom: 0.5rem; /* espacio abajo ← AJUSTA ESTE VALOR */
-  padding-left: 0.75rem; /* espacio izquierda ← AJUSTA ESTE VALOR */
-  /* padding: 0.5rem;   shorthand si usas mismo padding */
-
-  /* ——— Márgenes externos ——— */
-  margin-top: 0; /* margen arriba (no afecta si fixed) */
-  margin-right: 0; /* margen derecha */
-  margin-bottom: 0; /* margen abajo */
-  margin-left: 0; /* margen izquierda */
-  /* puedes usar margin si necesitas separarlo de otros elementos */
-
-  /* ——— Límites de tamaño ——— */
-  min-width: 100px; /* no se encoja más de este ancho ← OPCIONAL */
-  max-width: 200px; /* no crezca más de este ancho ← OPCIONAL */
-  min-height: 80px; /* no se encoja más de esta altura ← OPCIONAL */
-  max-height: 300px; /* no crezca más de esta altura ← OPCIONAL */
-
-  /* ——— Tipografía interna ——— */
-  font-size: 1rem; /* tamaño base del texto ← AJUSTA ESTE VALOR */
-  line-height: 1.2; /* altura de línea ← OPCIONAL */
-
-  /* ——— Icono del clima ——— */
-  /* Ajusta tamaño con estas reglas */
-  --icon-size: 40px; /* variable CSS, luego úsala más abajo */
-
-  /* ——— Visual ——— */
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px #00ffff33;
-
-  /* ——— Layout interno ——— */
+/* === INPUT Y BOTONES === */
+.manual-input {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-
-  z-index: 1000; /* siempre encima */
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.manual-input input {
+  padding: 10px;
+  width: 60%;
+  border: none;
+  border-radius: 5px;
+  background-color: #011219;
+  color: #00f7ff;
+  border: 1px solid #00f7ff33;
+}
+.manual-input button,
+button {
+  background: #00f7ff22;
+  color: #00f7ff;
+  border: 1px solid #00f7ff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.manual-input button:hover,
+button:hover {
+  background: #00f7ff44;
 }
 
-.info-box.news h3 {
-  margin-bottom: 0.5rem;
-}
-.info-box.news ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-.info-box.news li {
-  font-size: 0.9rem;
-  line-height: 1.2;
-}
-.info-box.news a {
-  color: #00ffff;
-  text-decoration: none;
-}
-.info-box.news a:hover {
-  text-decoration: underline;
+/* === TRANSCRIPCIÓN Y RESPUESTA === */
+#transcription,
+#response,
+#ceoResponse {
+  padding: 10px;
+  border: 1px solid #00f7ff33;
+  background-color: #011219;
+  color: #00f7ff;
+  border-radius: 5px;
+  margin-top: 10px;
+  min-height: 80px;
+  white-space: pre-wrap;
 }
 
-/* === Responsive Design === */
-
-/* Tablets y pantallas medianas */
-@media (max-width: 900px) {
-  /* Título ligeramente más pequeño */
-  h1.glow-text {
-    font-size: 2.5rem;
-  }
-
-  /* Logo/Jarvis más pequeño y más arriba */
-  .jarvis-core {
-    width: 140px;
-    height: 140px;
-    top: 60px;
-  }
-
-  /* Menos espacio arriba del contenido */
-  .content {
-    padding-top: 200px;
-  }
-
-  /* Paneles pasan a gap más reducido */
-  .horizontal-group {
-    gap: 10px;
-    padding: 10px;
-  }
-
-  /* Input manual ocupa menos ancho */
-  .manual-input input {
-    width: 50%;
-  }
-
-  /* Panel-items más estrechos */
-  .panel-item {
-    min-width: 200px;
-  }
-
-  /* Info‑boxes pasan a flujo normal (stack) */
-  .info-box.left,
-  .info-box.right,
-  .info-box.weather {
-    position: static;
-    width: 80%;
-    margin: 1rem auto;
-  }
-
-  /* Reloj un poco más chico */
-  .date-time {
-    font-size: 1rem;
-  }
+/* === HIDDEN === */
+.hidden {
+  display: none !important;
 }
 
-/* Móviles y pantallas pequeñas */
-@media (max-width: 600px) {
-  /* Título aún más pequeño */
-  h1.glow-text {
-    font-size: 2rem;
-  }
-
-  /* Logo/Jarvis muy compacto */
-  .jarvis-core {
-    width: 100px;
-    height: 100px;
-    top: 40px;
-  }
-
-  /* Botones e input ajustados */
-  button {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
-  .manual-input input {
-    width: 70%;
-  }
-
-  /* Paneles en columna */
-  .horizontal-group {
+/* === RESPONSIVO === */
+@media (max-width: 768px) {
+  .panel {
     flex-direction: column;
-    margin: 10px;
-    padding: 10px;
+    align-items: center;
   }
-  .panel-item {
-    min-width: 100%;
+  .manual-input {
+    flex-direction: column;
+    align-items: center;
   }
+  .manual-input input {
+    width: 100%;
+  }
+}
 
-  /* Todas las info‑boxes en bloque, ancho total */
-  .info-box {
-    position: static;
-    width: 90%;
-    margin: 0.5rem auto;
-  }
+/* DISEÑO DE LOS RESULTADOS DEL CEO */
 
-  /* Reloj arriba a la derecha y más pequeño */
-  .date-time {
-    top: 1rem;
-    bottom: auto;
-    right: 1rem;
-    font-size: 0.8rem;
-  }
+.ceo-output-container {
+  padding: 20px;
+  background-color: rgba(0, 255, 255, 0.06);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 12px;
+  display: grid;
+  gap: 20px;
+  font-family: "Orbitron", sans-serif;
+}
+
+.ceo-slide {
+  background: rgba(0, 255, 255, 0.05);
+  border-left: 3px solid cyan;
+  padding: 15px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.ceo-slide h3 {
+  color: cyan;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.ceo-slide p {
+  color: #c4fefe;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  white-space: pre-line;
+}
+
+.response-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.response-card {
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #00f9ff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.response-card:hover {
+  transform: translateY(-5px);
+}
+
+.response-card h3 {
+  font-size: 1.1rem;
+  color: #00f9ff;
+  margin-bottom: 10px;
+}
+
+.response-card i {
+  margin-right: 8px;
+  color: #00f9ff;
+}
+
+.ceo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.ceo-card {
+  font-family: "DM Sans", sans-serif; /* Cambiar la fuente aquí */
+  background: #0a1a24;
+  border: 1px solid #20e0ff33;
+  border-radius: 12px;
+  padding: 20px;
+  color: #eafcff;
+  box-shadow: 0 0 12px #20e0ff22;
+  transition: transform 0.3s ease;
+}
+
+.ceo-card:hover {
+  transform: scale(1.03);
+}
+
+.ceo-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #20e0ff;
+}
+
+.ceo-card-body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #eafcff;
+}
+
+.ceo-card-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+/* Fuente más legible para las tarjetas */
+.ceo-card {
+  font-family: "DM Sans", sans-serif;
 }

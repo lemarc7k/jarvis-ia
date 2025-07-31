@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
 
-    <!-- Font Awesome Free (solid icons) - Sin integrity para evitar bloqueos -->
+    <!-- Font Awesome Free -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -36,8 +36,7 @@
       </div>
     </div>
 
-    <!-- 1. INTEGRACION DATA&DATE: Inserta esto justo encima de tu contenedor principal -->
-    <!-- Pon esto donde quieras en tu HTML -->
+    <!-- Fecha y Hora -->
     <div class="date-time">
       <div id="date"></div>
       <div id="time"></div>
@@ -55,7 +54,7 @@
       <p>Red: OK</p>
     </div>
 
-    <!-- 2. INTEGRACIÓN CLIMA: Nuevo panel de Clima -->
+    <!-- Clima -->
     <div class="info-box weather">
       <h3>Clima</h3>
       <div id="weatherIcon"></div>
@@ -63,7 +62,7 @@
       <div id="weatherDesc">Cargando...</div>
     </div>
 
-    <!-- 3. INTEGRACIÓN NOTICIAS -->
+    <!-- Noticias -->
     <div class="info-box news">
       <h3>Noticias</h3>
       <ul id="newsList">
@@ -71,51 +70,20 @@
       </ul>
     </div>
 
-    <!-- Contenido Principal -->
+    <!-- Navegación por pestañas -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="ceoAI">CEO AGENT</button>
+    </div>
+
+    <!-- Contenedor Principal Dinámico -->
     <div class="content">
-      <h1 class="glow-text" style="font-family: 'Orbitron', sans-serif">
-        MEVE INDUSTRIES
-      </h1>
-
-      <!-- Botón de grabación -->
-      <button
-        id="recordBtn"
-        aria-label="Grabar consulta"
-        title="Grabar consulta"
-      >
-        <i class="fa-solid fa-microphone"></i>
-      </button>
-      <p id="status">En espera de su consulta...</p>
-
-      <div class="panel horizontal-group">
-        <!-- Entrada manual (brain) -->
-        <div class="panel-item">
-          <h2><i class="fa-solid fa-brain"></i></h2>
-          <div class="manual-input">
-            <input
-              id="manualText"
-              type="text"
-              placeholder="Escriba su consulta aquí, señor..."
-            />
-            <button id="sendBtn">Enviar</button>
-          </div>
-        </div>
-
-        <!-- Transcripción (comment-dots) -->
-        <div class="panel-item">
-          <h2><i class="fa-solid fa-comment-dots"></i></h2>
-          <div id="transcription">---</div>
-        </div>
-
-        <!-- Respuesta IA (comments) -->
-        <div class="panel-item">
-          <h2><i class="fa-solid fa-comments"></i></h2>
-          <div id="response">---</div>
-        </div>
+      <div id="mainContent">
+        <!-- Aquí se carga dinámicamente dashboard o ceoAI -->
       </div>
     </div>
 
     <!-- Script -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>
